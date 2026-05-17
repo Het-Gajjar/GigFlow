@@ -148,7 +148,7 @@ Update `Backend/.env`:
 ```env
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/gigflow
-JWT_SECRET=replace-with-a-strong-secret
+
 CLIENT_URL=http://localhost:5173
 NODE_ENV=development
 ```
