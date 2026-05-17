@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { type InferSchemaType, type HydratedDocument } from "mongoose";
 
 const notificationSchema = new mongoose.Schema(
     {
@@ -24,6 +24,9 @@ const notificationSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const notificationModel = mongoose.model("notification", notificationSchema);
+export type Notification = InferSchemaType<typeof notificationSchema>;
+export type NotificationDocument = HydratedDocument<Notification>;
+
+const notificationModel = mongoose.model<Notification>("notification", notificationSchema);
 
 export default notificationModel;

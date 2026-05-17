@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { type InferSchemaType, type HydratedDocument } from "mongoose";
 
 const submissionSchema = new mongoose.Schema(
     {
@@ -42,6 +42,9 @@ const submissionSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const submissionModel = mongoose.model("submission", submissionSchema);
+export type Submission = InferSchemaType<typeof submissionSchema>;
+export type SubmissionDocument = HydratedDocument<Submission>;
+
+const submissionModel = mongoose.model<Submission>("submission", submissionSchema);
 
 export default submissionModel;

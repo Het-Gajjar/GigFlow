@@ -17,7 +17,14 @@ if (!process.env.CLIENT_URL) {
     throw new Error("CLIENT_URL is missing");
 }
 
-const config = {
+interface AppConfig {
+    mongo_url: string;
+    JWT_SECRET: string;
+    PORT: string;
+    CLIENT_URL: string;
+}
+
+const config: AppConfig = {
     mongo_url: process.env.MONGO_URI,
     JWT_SECRET: process.env.JWT_SECRET,
     PORT: process.env.PORT,
