@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { Lock, Mail } from 'lucide-react'
 import Button from '../../../components/common/Button'
 import Input from '../../../components/common/Input'
 import { login } from '../state/authSlice'
@@ -31,6 +32,7 @@ const LoginForm = () => {
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <Input
         error={errors.email?.message}
+        icon={Mail}
         label="Email"
         placeholder="you@example.com"
         registration={register('email', {
@@ -41,6 +43,7 @@ const LoginForm = () => {
       />
       <Input
         error={errors.password?.message}
+        icon={Lock}
         label="Password"
         placeholder="Enter password"
         registration={register('password', {
@@ -49,7 +52,7 @@ const LoginForm = () => {
         })}
         type="password"
       />
-      <Button className="w-full" isLoading={loading} size="lg" type="submit">
+      <Button className="mt-2 w-full shadow-lg shadow-brand-700/20" isLoading={loading} size="lg" type="submit">
         Login
       </Button>
       <p className="text-center text-sm text-gray-500">

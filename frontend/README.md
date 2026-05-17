@@ -34,11 +34,11 @@ Configure API paths in `.env`:
 VITE_API_BASE_URL=http://localhost:5000/api
 VITE_SERVER_URL=http://localhost:5000
 VITE_USERS_ENDPOINT=/users
-VITE_ADMIN_TASKS_ENDPOINT=/tasks/my
-VITE_USER_TASKS_ENDPOINT=/tasks/my
+VITE_ADMIN_TASKS_ENDPOINT=/task/myTask
+VITE_USER_TASKS_ENDPOINT=/task/myTask
 ```
 
-The frontend uses the backend auth routes at `/api/auth/login` and `/api/auth/register`, task routes at `/api/tasks/my`, `/api/tasks/create`, and `/api/tasks/:id/status`, submission routes at `/api/submissions/create`, `/api/submissions`, and `/api/submissions/:id/review`, and notification routes at `/api/notifications` and `/api/notifications/read/:id`.
+The frontend uses the backend auth routes at `/api/auth/login` and `/api/auth/register`, task routes at `/api/task/myTask`, `/api/task/create`, `/api/task/:id`, and `/api/task/:id/status`, submission routes at `/api/submissions/create`, `/api/submissions`, and `/api/submissions/:id/review`, and notification routes at `/api/notifications` and `/api/notifications/read/:id`.
 
 `VITE_USERS_ENDPOINT` should point to the backend route that returns all assignable users.
 

@@ -4,6 +4,7 @@ import {
   createTaskRequest,
   deleteTaskRequest,
   fetchTasksRequest,
+  updateTaskDetailsRequest,
   updateTaskRequest,
 } from '../api/taskApi'
 
@@ -26,6 +27,14 @@ export const createTask = createAsyncThunk('tasks/createTask', async (payload, {
 export const updateTask = createAsyncThunk('tasks/updateTask', async (payload, { rejectWithValue }) => {
   try {
     return await updateTaskRequest(payload)
+  } catch (error) {
+    return rejectWithValue(error.message)
+  }
+})
+
+export const updateTaskDetails = createAsyncThunk('tasks/updateTaskDetails', async (payload, { rejectWithValue }) => {
+  try {
+    return await updateTaskDetailsRequest(payload)
   } catch (error) {
     return rejectWithValue(error.message)
   }
@@ -95,6 +104,20 @@ const taskSlice = createSlice({
         toast.success('Task updated successfully')
       })
       .addCase(updateTask.rejected, (state, action) => {
+        state.updating = false
+        state.error = action.payload
+        toast.error(action.payload || 'Unable to update task')
+      })
+      .addCase(updateTaskDetails.pending, (state) => {
+        state.updating = true
+        state.error = null
+      })
+      .addCase(updateTaskDetails.fulfilled, (state, action) => {
+        state.updating = false
+        state.items = state.items.map((task) => (task._id === action.payload._id ? action.payload : task))
+        toast.success('Task updated successfully')
+      })
+      .addCase(updateTaskDetails.rejected, (state, action) => {
         state.updating = false
         state.error = action.payload
         toast.error(action.payload || 'Unable to update task')

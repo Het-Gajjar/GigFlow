@@ -19,7 +19,12 @@ export const updateTaskRequest = async ({ id, updates }) => {
   return data.task || data.data || data
 }
 
+export const updateTaskDetailsRequest = async ({ id, updates }) => {
+  const { data } = await api.put(`/task/${id}`, updates)
+  return data.task || data.data || data
+}
+
 export const deleteTaskRequest = async (id) => {
-  const { data } = await api.delete(`/tasks/${id}`)
+  const { data } = await api.delete(`/task/${id}`)
   return data
 }

@@ -1,4 +1,4 @@
-import { CalendarDays, Send, UserCircle } from 'lucide-react'
+import { CalendarDays, Pencil, Send, Trash2, UserCircle } from 'lucide-react'
 import Button from '../../../components/common/Button'
 import Card from '../../../components/common/Card'
 import Select from '../../../components/common/Select'
@@ -6,7 +6,17 @@ import { formatDate } from '../../../utils/date'
 import { getAssignedUserEmail, getAssignedUserName, TASK_STATUSES } from '../../../utils/tasks'
 import StatusBadge from './StatusBadge'
 
-const TaskCard = ({ canSubmit = false, canUpdateStatus = false, onStatusChange, onSubmitWork, task, updating = false }) => {
+const TaskCard = ({
+  canManage = false,
+  canSubmit = false,
+  canUpdateStatus = false,
+  onDelete,
+  onEdit,
+  onStatusChange,
+  onSubmitWork,
+  task,
+  updating = false,
+}) => {
   return (
     <Card className="p-5">
       <div className="flex items-start justify-between gap-3">
@@ -50,6 +60,17 @@ const TaskCard = ({ canSubmit = false, canUpdateStatus = false, onStatusChange, 
         <Button className="mt-4 w-full" icon={Send} onClick={() => onSubmitWork(task)} variant={task.submission ? 'secondary' : 'primary'}>
           {task.submission ? 'Submit Again' : 'Submit Work'}
         </Button>
+      ) : null}
+
+      {canManage ? (
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <Button icon={Pencil} onClick={() => onEdit(task)} variant="secondary">
+            Edit
+          </Button>
+          <Button icon={Trash2} onClick={() => onDelete(task)} variant="danger">
+            Delete
+          </Button>
+        </div>
       ) : null}
     </Card>
   )

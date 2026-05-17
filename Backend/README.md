@@ -21,9 +21,11 @@ npm run build
 - `POST /api/auth/register`
 - `POST /api/auth/login`
 - `GET /api/users`
-- `GET /api/tasks/my`
-- `POST /api/tasks/create`
-- `PATCH /api/tasks/:id/status`
+- `GET /api/task/myTask`
+- `POST /api/task/create`
+- `PUT /api/task/:id`
+- `DELETE /api/task/:id`
+- `PATCH /api/task/:id/status`
 - `POST /api/submissions/create`
 - `GET /api/submissions`
 - `PATCH /api/submissions/:id/review`
