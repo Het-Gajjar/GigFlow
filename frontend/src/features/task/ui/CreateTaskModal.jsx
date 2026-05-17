@@ -10,7 +10,7 @@ import { useUsers } from '../../user/hooks/useUsers'
 import { fetchUsers } from '../../user/state/userSlice'
 import { createTask } from '../state/taskSlice'
 import { useTasks } from '../hooks/useTasks'
-import { TASK_STATUSES } from '../../../utils/tasks'
+import { TASK_PRIORITIES, TASK_STATUSES } from '../../../utils/tasks'
 
 const CreateTaskModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch()
@@ -26,8 +26,9 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
       title: '',
       description: '',
       status: 'pending',
+      priority: 'medium',
       assignedTo: '',
-      deadline: '',
+      dueDate: '',
     },
   })
 
@@ -69,13 +70,18 @@ const CreateTaskModal = ({ isOpen, onClose }) => {
               </option>
             ))}
           </Select>
-          <Input
-            error={errors.deadline?.message}
-            label="Deadline"
-            registration={register('deadline', { required: 'Deadline is required' })}
-            type="date"
-          />
+          <Select label="Priority" registration={register('priority')}>
+            {TASK_PRIORITIES.map((priority) => (
+              <option key={priority.value} value={priority.value}>{priority.label}</option>
+            ))}
+          </Select>
         </div>
+        <Input
+          error={errors.dueDate?.message}
+          label="Due date"
+          registration={register('dueDate', { required: 'Due date is required' })}
+          type="date"
+        />
         <Select
           disabled={usersLoading}
           error={errors.assignedTo?.message || usersError}

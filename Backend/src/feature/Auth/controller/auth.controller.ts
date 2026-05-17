@@ -20,10 +20,12 @@ const registerUser = async (req: Request, res: Response) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
 
         });
-        res.status(201).json({ user, token });
+        const safeUser = await userModel.findById(user._id).select("-password");
+        res.status(201).json({ user: safeUser, token });
     } catch (error) {
         res.status(500).json({ message: "Error registering user", error });
     }
@@ -48,10 +50,12 @@ const loginUser = async (req: Request, res: Response) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
 
         });
-        res.status(200).json({ user, token });
+        const safeUser = await userModel.findById(user._id).select("-password");
+        res.status(200).json({ user: safeUser, token });
     } catch (error) {
         res.status(500).json({ message: "Error logging in user", error });
     }

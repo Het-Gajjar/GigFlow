@@ -1,11 +1,12 @@
-import { CalendarDays, UserCircle } from 'lucide-react'
+import { CalendarDays, Send, UserCircle } from 'lucide-react'
+import Button from '../../../components/common/Button'
 import Card from '../../../components/common/Card'
 import Select from '../../../components/common/Select'
 import { formatDate } from '../../../utils/date'
-import { getAssignedUserName, TASK_STATUSES } from '../../../utils/tasks'
+import { getAssignedUserEmail, getAssignedUserName, TASK_STATUSES } from '../../../utils/tasks'
 import StatusBadge from './StatusBadge'
 
-const TaskCard = ({ canUpdateStatus = false, onStatusChange, task, updating = false }) => {
+const TaskCard = ({ canSubmit = false, canUpdateStatus = false, onStatusChange, onSubmitWork, task, updating = false }) => {
   return (
     <Card className="p-5">
       <div className="flex items-start justify-between gap-3">
@@ -19,12 +20,13 @@ const TaskCard = ({ canUpdateStatus = false, onStatusChange, task, updating = fa
       <div className="mt-5 space-y-3 border-t border-gray-100 pt-4 text-sm text-gray-500">
         <div className="flex items-center gap-2">
           <UserCircle className="h-4 w-4 text-gray-400" />
-          <span>{getAssignedUserName(task.assignedTo)}</span>
+          <span>{getAssignedUserName(task.assignedTo)}{getAssignedUserEmail(task.assignedTo) ? ` · ${getAssignedUserEmail(task.assignedTo)}` : ''}</span>
         </div>
         <div className="flex items-center gap-2">
           <CalendarDays className="h-4 w-4 text-gray-400" />
-          <span>Created {formatDate(task.createdAt)}</span>
+          <span>Due {formatDate(task.dueDate)} · Created {formatDate(task.createdAt)}</span>
         </div>
+        {task.priority ? <span className="inline-flex rounded-full bg-gray-100 px-2.5 py-1 text-xs font-semibold capitalize text-gray-700">{task.priority} priority</span> : null}
       </div>
 
       {canUpdateStatus ? (
@@ -42,6 +44,12 @@ const TaskCard = ({ canUpdateStatus = false, onStatusChange, task, updating = fa
             ))}
           </Select>
         </div>
+      ) : null}
+
+      {canSubmit ? (
+        <Button className="mt-4 w-full" icon={Send} onClick={() => onSubmitWork(task)} variant={task.submission ? 'secondary' : 'primary'}>
+          {task.submission ? 'Submit Again' : 'Submit Work'}
+        </Button>
       ) : null}
     </Card>
   )

@@ -2,7 +2,7 @@ import EmptyState from '../../../components/common/EmptyState'
 import Loader from '../../../components/common/Loader'
 import TaskCard from './TaskCard'
 
-const TaskGrid = ({ canUpdateStatus, emptyAction, loading, onStatusChange, tasks, updating }) => {
+const TaskGrid = ({ canSubmit, canUpdateStatus, emptyAction, loading, onStatusChange, onSubmitWork, tasks, updating }) => {
   if (loading) return <Loader label="Loading tasks" />
 
   if (!tasks.length) {
@@ -20,8 +20,10 @@ const TaskGrid = ({ canUpdateStatus, emptyAction, loading, onStatusChange, tasks
       {tasks.map((task) => (
         <TaskCard
           canUpdateStatus={canUpdateStatus}
+          canSubmit={canSubmit}
           key={task._id}
           onStatusChange={onStatusChange}
+          onSubmitWork={onSubmitWork}
           task={task}
           updating={updating}
         />

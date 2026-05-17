@@ -1,13 +1,15 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import TaskFilters from '../features/task/ui/TaskFilters'
 import TaskGrid from '../features/task/ui/TaskGrid'
 import { fetchTasks, setActiveStatus, updateTask } from '../features/task/state/taskSlice'
 import { useTasks } from '../features/task/hooks/useTasks'
+import SubmitWorkModal from '../features/submission/ui/SubmitWorkModal'
 
 const UserDashboardPage = () => {
   const dispatch = useDispatch()
   const { activeStatus, items, loading, updating } = useTasks()
+  const [selectedTask, setSelectedTask] = useState(null)
 
   useEffect(() => {
     dispatch(fetchTasks({ role: 'user' }))
@@ -34,12 +36,15 @@ const UserDashboardPage = () => {
       </div>
 
       <TaskGrid
+        canSubmit
         canUpdateStatus
         loading={loading}
         onStatusChange={handleStatusChange}
+        onSubmitWork={setSelectedTask}
         tasks={filteredTasks}
         updating={updating}
       />
+      <SubmitWorkModal isOpen={Boolean(selectedTask)} onClose={() => setSelectedTask(null)} task={selectedTask || {}} />
     </div>
   )
 }

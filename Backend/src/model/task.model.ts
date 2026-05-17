@@ -18,7 +18,13 @@ const taskSchema = new mongoose.Schema(
             default: "pending",
         },
 
-        deadline: {
+        priority: {
+            type: String,
+            enum: ["low", "medium", "high"],
+            default: "medium",
+        },
+
+        dueDate: {
             type: Date,
             required: true,
         },
@@ -33,6 +39,12 @@ const taskSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "user",
             required: true,
+        },
+
+        submission: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "submission",
+            default: null,
         },
     },
     {

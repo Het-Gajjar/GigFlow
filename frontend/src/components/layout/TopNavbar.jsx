@@ -1,8 +1,9 @@
-import { Bell, LogOut, Menu, Plus, UserCircle } from 'lucide-react'
+import { LogOut, Menu, Plus, UserCircle } from 'lucide-react'
 import { useDispatch } from 'react-redux'
 import Button from '../common/Button'
 import { logout } from '../../features/auth/state/authSlice'
 import { useAuth } from '../../features/auth/hooks/useAuth'
+import NotificationDropdown from '../../features/notification/ui/NotificationDropdown'
 
 const TopNavbar = ({ onCreateTask, onMenuClick }) => {
   const dispatch = useDispatch()
@@ -25,7 +26,7 @@ const TopNavbar = ({ onCreateTask, onMenuClick }) => {
             Add Task
           </Button>
         ) : null}
-        <Button aria-label="Notifications" icon={Bell} size="sm" variant="secondary" />
+        <NotificationDropdown />
         <div className="hidden items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 md:flex">
           <UserCircle className="h-5 w-5 text-gray-500" />
           <div className="text-left">

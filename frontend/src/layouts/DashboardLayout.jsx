@@ -1,12 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import Sidebar from '../components/layout/Sidebar'
 import TopNavbar from '../components/layout/TopNavbar'
+import { useAuth } from '../features/auth/hooks/useAuth'
+import { notificationReceived } from '../features/notification/state/notificationSlice'
 import CreateTaskModal from '../features/task/ui/CreateTaskModal'
+import { connectSocket, disconnectSocket } from '../services/socket/socketClient'
 
 const DashboardLayout = () => {
+  const dispatch = useDispatch()
+  const { token, user } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [taskModalOpen, setTaskModalOpen] = useState(false)
+
+  useEffect(() => {
+    if (user?._id || user?.id) {
+      connectSocket({
+        userId: user._id || user.id,
+        token,
+        onNotification: (notification) => dispatch(notificationReceived(notification)),
+      })
+    }
+
+    return () => disconnectSocket()
+  }, [dispatch, token, user])
 
   return (
     <div className="min-h-screen bg-gray-50">

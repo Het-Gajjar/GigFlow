@@ -2,14 +2,6 @@ import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import config from "../../../config/config.js";
 
-declare global {
-    namespace Express {
-        interface Request {
-            user?: any;
-        }
-    }
-}
-
 const identifyUser = (req: Request, res: Response, next: NextFunction) => {
 
     try {
@@ -19,7 +11,7 @@ const identifyUser = (req: Request, res: Response, next: NextFunction) => {
         if (!token) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const decodedToken = jwt.verify(token, config.JWT_SECRET);
+        const decodedToken = jwt.verify(token, config.JWT_SECRET) as NonNullable<Express.Request["user"]>;
 
         req.user = decodedToken;
         next();
