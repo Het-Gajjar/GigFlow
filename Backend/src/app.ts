@@ -10,11 +10,15 @@ import userRouter from './feature/user/user.routes.js';
 import submissionRouter from './feature/Submission/submission.routes.js';
 import notificationRouter from './feature/Notification/notification.routes.js';
 import errorMiddleware from './middleware/error.middleware.js';
+import config from './config/config.js';
 dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: [
+        config.CLIENT_URL ? config.CLIENT_URL.replace(/\/$/, "") : "http://localhost:5173",
+        "http://localhost:5173"
+    ],
     credentials: true
 }));
 

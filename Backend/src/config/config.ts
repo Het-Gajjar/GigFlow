@@ -13,11 +13,15 @@ if (!process.env.JWT_SECRET) {
 if (!process.env.PORT) {
     throw new Error("PORT is missing");
 }
+if (!process.env.CLIENT_URL) {
+    throw new Error("CLIENT_URL is missing");
+}
 
 const config = {
     mongo_url: process.env.MONGO_URI,
     JWT_SECRET: process.env.JWT_SECRET,
     PORT: process.env.PORT,
+    CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5173"
 };
 
 export default config;
